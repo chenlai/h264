@@ -1,0 +1,26 @@
+import os
+
+Import('*')
+
+_myName = 'libh264dec'
+#modules = ['source']
+#externLibrary = ['']
+           
+      
+_env = env.Clone()
+#_env.Append(CPPFLAGS = '''  -DENABLE_PROFILING ''') 
+_env.Append(CPPPATH = ['#libvideo/h264dec/include'])
+
+_env.Append(LIBPATH = 'lib')
+#_env['LIBS'] = externLibrary[:]
+
+_source = Glob('*.c') + Glob('*.cpp')+Glob('rtpsrc/*.c') + Glob('rtpsrc/*.cpp')
+objs = _source[:]
+
+target = _env.StaticLibrary(_myName + '.a', objs, _LIBFLAGS=' -Wl,-Bsymbolic')
+objs.append(target)
+
+
+all = target
+
+Return('all')
